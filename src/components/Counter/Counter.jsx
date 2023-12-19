@@ -1,36 +1,42 @@
 import React from 'react';
+import { Controls } from 'components/Controls/Controls';
+import { CounterContainer, CounterValue } from './Counter.styled';
 
+// обязательное расширение базового класса
 class Counter extends React.Component {
-  state = {
-    value: 5,
+  static defaultProps = {
+    initialValue: 0,
   };
 
+  state = {
+    value: this.props.initialValue,
+  };
+
+  // обновление состояния от предыдущего
   handleIncrement = () => {
     this.setState(prevState => ({
       value: prevState.value + 1,
     }));
   };
 
+  // обновление состояния от предыдущего
   handleDecrement = () => {
     this.setState(prevState => ({
       value: prevState.value - 1,
     }));
   };
 
+  // ОБЯЗАТЕЛЬНЫЙ метод класса
   render() {
     return (
-      <div>
-        <span>{this.state.value}</span>
+      <CounterContainer>
+        <CounterValue value={this.state.value} />
 
-        <div>
-          <button type="button" onClick={this.handleIncrement}>
-            More (+1)
-          </button>
-          <button type="button" onClick={this.handleDecrement}>
-            Less (-1)
-          </button>
-        </div>
-      </div>
+        <Controls
+          onIncrement={this.handleIncrement}
+          onDecrement={this.handleDecrement}
+        />
+      </CounterContainer>
     );
   }
 }
